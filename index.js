@@ -1,16 +1,33 @@
 import { Board } from "./board.js"
 import {dict} from "./vars.js"
-const root = document.getElementById('root')
+import { onSquareClick } from "./ui.js"
+
+export const root = document.getElementById('root')
+
+export const board = new Board()
 
 
-const board = new Board()
-console.log(board)
-console.log(dict)
-
-console.log(board.arr[6][0].piece.valid_moves())
-console.log(board.arr[6][1].piece.valid_moves())
-console.log(board.arr[6][2].piece.valid_moves())
 root.appendChild(board.render())
 
+
+let grid = document.getElementsByClassName('square');
+export let squares = convertToBoard(grid)
+
+function convertToBoard(arr){
+    let i =0
+    let j = 0
+    let rows = []
+    while(i < 64){
+        let r = []
+        while(j < 8){
+            r.push(arr[i])
+            i++;
+            j++;
+        }
+        j = 0
+        rows.push(r)
+    }
+    return rows
+}
 
 
