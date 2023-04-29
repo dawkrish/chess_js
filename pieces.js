@@ -7,11 +7,14 @@ export class Piece {
         this.piece_position = piece_position
     }
     move(to){
-       let from_p = dict[this.piece_position]
-       let to_p = dict[to]
+        console.log('running the move function ')
+        let from_p = dict[this.piece_position]
 
-       this.board[from_p[0]][from_p[1]].piece = null
-       this.board[to_p[0]][to_p[1]].piece = this
+
+        this.board.arr[to[0]][to[1]].piece = this.board.arr[from_p[0]][from_p[1]].piece
+        this.board.arr[from_p[0]][from_p[1]].piece = null
+        this.board.arr[to[0]][to[1]].piece.piece_position = `${String.fromCharCode(65 + Number(to[1]))}${8 - Number(to[0])}`
+
     }
 }
 
