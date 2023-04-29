@@ -14,9 +14,10 @@
     flex-direction: column;
 
 }
-.board-row{
+.board_row{
     display: flex;
     flex-direction: row;
+    /* height: 70px !important; */
 }
 .square{
     width: 70px;
@@ -35,4 +36,16 @@
 .img_cls{
     width: 65px;
     height: 65px;
+
+}
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.transparent{
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    background-color: black
 }
