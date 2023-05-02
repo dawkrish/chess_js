@@ -18,6 +18,9 @@ export class Pawn extends Piece{
         // First code it for white
 
         if(this.piece_color == "white"){
+            if(this.board.chance == "black"){
+                return []
+            }
            let pos = dict[this.piece_position]
            //1st condition -> The front tile is not out of board
            if(pos[0] - 1 >= 0 ){
@@ -66,6 +69,9 @@ export class Pawn extends Piece{
     
     // for BLACK
     if(this.piece_color == "black"){
+        if(this.board.chance == "white"){
+            return []
+        }
         let pos = dict[this.piece_position]
         //1st condition -> The front tile is not out of board
         if(pos[0] + 1 >= 0 ){

@@ -11,7 +11,7 @@ import { board } from "./index.js"
 export class Board{
     constructor(){
         this.arr=[]
-        this.piece_clicked = null
+        this.chance = "white"
         this.create_board()
     }
 
@@ -50,7 +50,7 @@ export class Board{
         this.arr[1][7].piece = new Pawn(this,"black",this.arr[1][7].coordinates)
 
         //TEST
-        this.arr[5][1].piece = new Pawn(this,"black",this.arr[5][1].coordinates)
+        // this.arr[5][1].piece = new Pawn(this,"black",this.arr[5][1].coordinates)
 
         // Putting 16 White pieces on the board 
         this.arr[6][0].piece = new Pawn(this,"white",this.arr[6][0].coordinates)
@@ -121,10 +121,38 @@ function foo(a){
 
     let game_square_clicked = board.arr[coordinates[0]][coordinates[1]]
     let ui_square_clicked = squares[coordinates[0]][coordinates[1]]
-   
+  
 
     if(ui_square_clicked.getAttribute("clicked") == "true"){
         // Do nothing if it is clicked again !
+        let clicked_piece = isAnyOtherClicked(squares)
+        // it means that a piece is already clicked on the board 
+        if(clicked_piece != false){
+            // now we will remove it from the clicked zone
+            let clicked_piece_coord = clicked_piece.dataset.key
+            squares[clicked_piece_coord[0]][clicked_piece_coord[1]].setAttribute("clicked","false")
+            // remove the highlights of it !
+            // fetch valid moves of the already clicked piece and then remove highlights
+            // console.log(board.arr[clicked_piece_coord[0]][clicked_piece_coord[1]].piece)
+            let valid_moves = board.arr[clicked_piece_coord[0]][clicked_piece_coord[1]].piece.valid_moves()
+            for(let i = 0; i < valid_moves.length; i++){
+                // now we will remove the highlight of it
+                let children = squares[valid_moves[i][0]][valid_moves[i][1]].childNodes
+                let child = null
+                children.forEach(element => {
+                    if(element.classList.contains('center')){
+                        child = element
+                    }
+                });
+
+                // remove the highlighted child
+                squares[valid_moves[i][0]][valid_moves[i][1]].removeChild(child)
+                // remove the attribute of highlighted to false !
+                squares[valid_moves[i][0]][valid_moves[i][1]].setAttribute('highlighted',"false")
+            }
+        }
+        return
+        
     }
     if(ui_square_clicked.getAttribute("clicked") == "false" && game_square_clicked.piece != null && ui_square_clicked.getAttribute("highlighted") == "false"){
 
@@ -140,7 +168,7 @@ function foo(a){
             squares[clicked_piece_coord[0]][clicked_piece_coord[1]].setAttribute("clicked","false")
             // remove the highlights of it !
             // fetch valid moves of the already clicked piece and then remove highlights
-            console.log(board.arr[clicked_piece_coord[0]][clicked_piece_coord[1]].piece)
+            // console.log(board.arr[clicked_piece_coord[0]][clicked_piece_coord[1]].piece)
             let valid_moves = board.arr[clicked_piece_coord[0]][clicked_piece_coord[1]].piece.valid_moves()
             for(let i = 0; i < valid_moves.length; i++){
                 // now we will remove the highlight of it
@@ -187,6 +215,12 @@ function foo(a){
         let clicked_piece = isAnyOtherClicked(squares)
         let clicked_piece_coord = clicked_piece.dataset.key
         board.arr[clicked_piece_coord[0]][clicked_piece_coord[1]].piece.move(`${coordinates[0]}${coordinates[1]}`)
+        if(board.chance == "white"){
+            board.chance = "black"
+        }
+        else{
+            board.chance="white"
+        }
         root.innerHTML = ""
         root.appendChild(board.render())
     }
@@ -194,14 +228,14 @@ function foo(a){
     if(ui_square_clicked.getAttribute("highlighted") == "false"){
         // Do nothing !
     }
-
+    console.log(board.chance)
 }
 
 function isAnyOtherClicked(squares){
     for(let i = 0; i < 8; i++){
         for(let j = 0; j < 8; j++){
             if(squares[i][j].getAttribute('clicked') == "true"){
-                console.log(squares[i][j])
+                // console.log(squares[i][j])
                 return squares[i][j]
             }
         }
