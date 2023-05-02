@@ -17,6 +17,9 @@ export class Rook extends Piece{
         let pos = dict[this.piece_position]
 
         if(this.piece_color == "white"){
+            if(this.board.chance == "black"){
+                return []
+            }
             // UP
             let i = pos[0]
             let j = pos[1]
@@ -95,6 +98,9 @@ export class Rook extends Piece{
             }
         }
         else{
+            if(this.board.chance == "white"){
+                return []
+            }
             // UP
             let i = pos[0]
             let j = pos[1]

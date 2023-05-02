@@ -18,6 +18,9 @@ export class Knight extends Piece{
         let pos = dict[this.piece_position]
         // First for white
         if(this.piece_color == "white"){
+            if(this.board.chance == "black"){
+                return []
+            }
         
             // left up up square
             if(pos[0]-2 >=0 && pos[1]-1 >= 0){
@@ -131,6 +134,9 @@ export class Knight extends Piece{
         }
        
         else{
+            if(this.board.chance == "white"){
+                return []
+            }
             // left up up square
             if(pos[0]+2 <=7 && pos[1]-1 >= 0){
                 let target_pos = this.board.arr[pos[0]+2][pos[1]-1]
