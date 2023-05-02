@@ -1,6 +1,6 @@
 import { Board } from "./board.js"
 import {dict} from "./vars.js"
-import { onSquareClick } from "./ui.js"
+
 
 export const root = document.getElementById('root')
 
