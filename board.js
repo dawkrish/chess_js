@@ -217,7 +217,7 @@ function foo(a) {
     // before performing any actions we must check that whether another piece on th ui_board is clicked or not
     // if it is not clicked then we can go further
     // if it is clicked then we must remove all the highlighted piece and remove it from clicked zone
-    console.log(game_square_clicked.piece.valid_moves());
+
     let clicked_piece = isAnyOtherClicked(squares);
     // it means that a piece is already clicked on the board
     if (clicked_piece != false) {
@@ -279,7 +279,6 @@ function foo(a) {
   if (ui_square_clicked.getAttribute("highlighted") == "true") {
     // we are clicking one of the possible valid moves
     // now we need to perform the move operation
-    console.log("clicking the highlighted piece");
     //first find the piece which "clicked property is set to true !"
     let clicked_piece = isAnyOtherClicked(squares);
     let clicked_piece_coord = clicked_piece.dataset.key;

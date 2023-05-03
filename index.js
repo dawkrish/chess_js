@@ -5,7 +5,7 @@ import {dict} from "./vars.js"
 export const root = document.getElementById('root')
 
 export const board = new Board()
-
+console.log(board)
 
 root.appendChild(board.render())
 
