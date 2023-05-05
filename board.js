@@ -152,22 +152,20 @@ function foo(a) {
   let game_square_clicked = board.arr[coordinates[0]][coordinates[1]];
   let ui_square_clicked = squares[coordinates[0]][coordinates[1]];
 
-  
-  if(isAnyOtherClicked(squares) != false){
+  if (isAnyOtherClicked(squares) != false) {
     // now I cannot click on a piece which is not highlighted and of opposite color
-    if(ui_square_clicked.getAttribute("highlighted") == "false"){
-        if(game_square_clicked.piece != null){
-            if(game_square_clicked.piece.piece_color != board.chance){
-                return
-            }
+    if (ui_square_clicked.getAttribute("highlighted") == "false") {
+      if (game_square_clicked.piece != null) {
+        if (game_square_clicked.piece.piece_color != board.chance) {
+          return;
         }
+      }
     }
-  }
-  else{
-    if(game_square_clicked.piece != null){
-        if(game_square_clicked.piece.piece_color != board.chance){
-            return
-        }
+  } else {
+    if (game_square_clicked.piece != null) {
+      if (game_square_clicked.piece.piece_color != board.chance) {
+        return;
+      }
     }
   }
 
@@ -285,9 +283,42 @@ function foo(a) {
     board.arr[clicked_piece_coord[0]][clicked_piece_coord[1]].piece.move(
       `${coordinates[0]}${coordinates[1]}`
     );
+    let black_king;
+    let white_king;
+
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (board.arr[i][j].piece != null) {
+          if (
+            board.arr[i][j].piece.piece_color == "black" &&
+            board.arr[i][j].piece.constructor.name == "King"
+          )
+            black_king = board.arr[i][j].piece;
+          if (
+            board.arr[i][j].piece.piece_color == "white" &&
+            board.arr[i][j].piece.constructor.name == "King"
+          )
+            white_king = board.arr[i][j].piece;
+        }
+      }
+    }
+
     if (board.chance == "white") {
+      // check if BLACK KING IS CHECKMATE
+      if (black_king.is_checkmate()) {
+        console.log("white wins!");
+      }
+      if (black_king.is_stalemate()) {
+        console.log("nobody wins!");
+      }
       board.chance = "black";
     } else {
+      if (white_king.is_checkmate()) {
+        console.log("black wins!");
+      }
+      if (white_king.is_stalemate()) {
+        console.log("nobody wins!");
+      }
       board.chance = "white";
     }
     root.innerHTML = "";
@@ -303,7 +334,6 @@ function isAnyOtherClicked(squares) {
   for (let i = 0; i < 8; i++) {
     for (let j = 0; j < 8; j++) {
       if (squares[i][j].getAttribute("clicked") == "true") {
-        // console.log(squares[i][j])
         return squares[i][j];
       }
     }
