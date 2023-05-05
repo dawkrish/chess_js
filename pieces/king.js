@@ -12,6 +12,7 @@ export class King extends Piece {
     }
   }
   valid_moves() {
+    
     let valid_moves = [];
     let pos = dict[this.piece_position];
 
