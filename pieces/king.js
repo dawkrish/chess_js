@@ -364,14 +364,11 @@ export class King extends Piece {
 
             let opp_valid_moves = this.board.arr[i][j].piece.invalid_moves();
             let my_king_position = dict[this.piece_position];
-            // console.log(opp_valid_moves)
-            // console.log(my_king_position)
-            if (
-              opp_valid_moves
-                .map(JSON.stringify)
-                .includes(JSON.stringify(my_king_position))
-            ) {
-              return true;
+            
+            for (let k = 0; k < opp_valid_moves.length; k++) {
+              if (JSON.stringify(opp_valid_moves[k]) == JSON.stringify(my_king_position)) {
+                return true;
+              }
             }
           }
         }

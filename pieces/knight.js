@@ -305,6 +305,21 @@ export class Knight extends Piece {
       console.log(this.board);
       return new_valid_moves;
     }
+    let i = 0
+    while(i < valid_moves.length){
+      let my_pos = dict[this.piece_position]; // get self piece position
+      let new_pos = valid_moves[i]
+      let piece_at_new_position = this.board.arr[new_pos[0]][new_pos[1]].piece; // get the piece at the valid pos , we will need to put it back !
+      this.board.arr[my_pos[0]][my_pos[1]].piece.move(valid_moves[i]); // moving self piece to the valid pos
+      if (my_king.is_in_check() == true) {
+        valid_moves.splice(i, 1);
+        i-- // need to do because valid move array's length is reduced therefore i also need to be removed, try with a example 
+        // let valid move arr have 2 elements, suppose 1st is removed, then valid move array length becomes 1, so for next itereation 1 < 1; to avoid this we decrease i -> i- 1 ; so when it is incremented below , it turns i->0 .
+      }
+      this.board.arr[new_pos[0]][new_pos[1]].piece.move(my_pos); // moving the self piece back to my_pos
+      this.board.arr[new_pos[0]][new_pos[1]].piece = piece_at_new_position; // placing the piece which was replaced back to its original position !
+      i++
+    }
     return valid_moves;
   }
   invalid_moves() {
