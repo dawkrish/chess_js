@@ -297,7 +297,6 @@ export class King extends Piece {
           });
         });
       });
-      console.log(opponent_valid_moves);
     }
     return valid_moves;
   }

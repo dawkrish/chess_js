@@ -394,7 +394,16 @@ export class Queen extends Piece {
       let target_pos = this.board.arr[i - 1][j];
       // append the move first then break if there is piece !
       invalid_moves.push([i - 1, j]);
-      if (target_pos.piece != null) break;
+      if (target_pos.piece != null){
+       if(target_pos.piece.piece_color == this.piece_color){
+        break
+       }
+       else{
+        if(target_pos.piece.constructor.name != "King"){
+          break
+        }
+       }
+      }
       i--;
     }
 
@@ -408,7 +417,16 @@ export class Queen extends Piece {
       // append the move first then break if there is piece !
       invalid_moves.push([i + 1, j]);
       // break if the position is not empty
-      if (target_pos.piece != null) break;
+      if (target_pos.piece != null){
+        if(target_pos.piece.piece_color == this.piece_color){
+         break
+        }
+        else{
+         if(target_pos.piece.constructor.name != "King"){
+           break
+         }
+        }
+       }
       i++;
     }
 
@@ -419,7 +437,16 @@ export class Queen extends Piece {
     while (j - 1 >= 0) {
       let target_pos = this.board.arr[i][j - 1];
       invalid_moves.push([i, j - 1]);
-      if (target_pos.piece != null) break;
+      if (target_pos.piece != null){
+        if(target_pos.piece.piece_color == this.piece_color){
+         break
+        }
+        else{
+         if(target_pos.piece.constructor.name != "King"){
+           break
+         }
+        }
+       }
       j--;
     }
 
@@ -430,7 +457,16 @@ export class Queen extends Piece {
     while (j + 1 <= 7) {
       let target_pos = this.board.arr[i][j + 1];
       invalid_moves.push([i, j + 1]);
-      if (target_pos.piece != null) break;
+     if (target_pos.piece != null){
+       if(target_pos.piece.piece_color == this.piece_color){
+        break
+       }
+       else{
+        if(target_pos.piece.constructor.name != "King"){
+          break
+        }
+       }
+      }
       j++;
     }
     // Bishop movements !
@@ -442,7 +478,16 @@ export class Queen extends Piece {
       let target_pos = this.board.arr[i - 1][j - 1];
       invalid_moves.push([i - 1, j - 1]);
       // break if the position is not empty
-      if (target_pos.piece != null) break;
+     if (target_pos.piece != null){
+       if(target_pos.piece.piece_color == this.piece_color){
+        break
+       }
+       else{
+        if(target_pos.piece.constructor.name != "King"){
+          break
+        }
+       }
+      }
       i--;
       j--;
     }
@@ -454,7 +499,16 @@ export class Queen extends Piece {
     while (i - 1 >= 0 && j + 1 <= 7) {
       let target_pos = this.board.arr[i - 1][j + 1];
       invalid_moves.push([i - 1, j + 1]);
-      if (target_pos.piece != null) break;
+     if (target_pos.piece != null){
+       if(target_pos.piece.piece_color == this.piece_color){
+        break
+       }
+       else{
+        if(target_pos.piece.constructor.name != "King"){
+          break
+        }
+       }
+      }
       i--;
       j++;
     }
@@ -466,7 +520,16 @@ export class Queen extends Piece {
     while (j - 1 >= 0 && i + 1 <= 7) {
       let target_pos = this.board.arr[i + 1][j - 1];
       invalid_moves.push([i + 1, j - 1]);
-      if (target_pos.piece != null) break;
+     if (target_pos.piece != null){
+       if(target_pos.piece.piece_color == this.piece_color){
+        break
+       }
+       else{
+        if(target_pos.piece.constructor.name != "King"){
+          break
+        }
+       }
+      }
       j--;
       i++;
     }
@@ -478,7 +541,16 @@ export class Queen extends Piece {
     while (j + 1 <= 7 && i + 1 <= 7) {
       let target_pos = this.board.arr[i + 1][j + 1];
       invalid_moves.push([i + 1, j + 1]);
-      if (target_pos.piece != null) break;
+     if (target_pos.piece != null){
+       if(target_pos.piece.piece_color == this.piece_color){
+        break
+       }
+       else{
+        if(target_pos.piece.constructor.name != "King"){
+          break
+        }
+       }
+      }
       j++;
       i++;
     }
