@@ -308,7 +308,7 @@ function foo(a) {
       if (black_king.is_checkmate()) {
         console.log("white wins!");
       }
-      if (black_king.is_stalemate()) {
+      else if (black_king.is_stalemate()) {
         console.log("nobody wins!");
       }
       board.chance = "black";
@@ -316,7 +316,7 @@ function foo(a) {
       if (white_king.is_checkmate()) {
         console.log("black wins!");
       }
-      if (white_king.is_stalemate()) {
+      else if (white_king.is_stalemate()) {
         console.log("nobody wins!");
       }
       board.chance = "white";
