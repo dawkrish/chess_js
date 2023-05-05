@@ -320,42 +320,63 @@ export class King extends Piece {
     i = pos[0];
     j = pos[1];
     if (j - 1 >= 0) {
-        invalid_moves.push([i, j - 1]);
+      invalid_moves.push([i, j - 1]);
     }
-
 
     i = pos[0];
     j = pos[1];
     if (j + 1 <= 7) {
-        invalid_moves.push([i, j + 1]);
+      invalid_moves.push([i, j + 1]);
     }
-
 
     i = pos[0];
     j = pos[1];
     if (j + 1 <= 7) {
-        invalid_moves.push([i - 1, j - 1]);
+      invalid_moves.push([i - 1, j - 1]);
     }
 
+    i = pos[0];
+    j = pos[1];
+    if (i - 1 >= 0 && j + 1 <= 7) {
+      invalid_moves.push([i - 1, j + 1]);
+    }
 
-      i = pos[0];
-      j = pos[1];
-      if (i - 1 >= 0 && j + 1 <= 7) {
-        invalid_moves.push([i - 1, j + 1]);
-      }
+    i = pos[0];
+    j = pos[1];
+    if (i + 1 <= 7 && j - 1 >= 0) {
+      invalid_moves.push([i + 1, j - 1]);
+    }
 
-
-      i = pos[0];
-      j = pos[1];
-      if (i + 1 <= 7 && j - 1 >= 0) {
-        invalid_moves.push([i + 1, j - 1]);
-      }
-
-      i = pos[0];
-      j = pos[1];
-      if (i + 1 <= 7 && j + 1 <= 7) {
-        invalid_moves.push([i + 1, j + 1]);
-      }
+    i = pos[0];
+    j = pos[1];
+    if (i + 1 <= 7 && j + 1 <= 7) {
+      invalid_moves.push([i + 1, j + 1]);
+    }
     return invalid_moves;
+  }
+  is_in_check() {
+    // To check whether your king is in check or not, we will gather all the Opponent's valid moves, if any of them has king as it's position then king is in check
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (this.board.arr[i][j].piece != null) {
+          if (this.board.arr[i][j].piece.piece_color != this.piece_color) {
+            // we have counter an opponent piece
+
+            let opp_valid_moves = this.board.arr[i][j].piece.invalid_moves();
+            let my_king_position = dict[this.piece_position];
+            // console.log(opp_valid_moves)
+            // console.log(my_king_position)
+            if (
+              opp_valid_moves
+                .map(JSON.stringify)
+                .includes(JSON.stringify(my_king_position))
+            ) {
+              return true;
+            }
+          }
+        }
+      }
+    }
+    return false;
   }
 }

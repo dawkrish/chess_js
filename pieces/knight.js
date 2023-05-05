@@ -272,7 +272,39 @@ export class Knight extends Piece {
         }
       }
     }
-
+    // before returning these valid moves we must check that whether our king is in check or not
+    // first select same color king
+    let my_king;
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (this.board.arr[i][j].piece != null) {
+          if (
+            this.board.arr[i][j].piece.piece_color == this.piece_color &&
+            this.board.arr[i][j].piece.constructor.name == "King"
+          ) {
+            my_king = this.board.arr[i][j].piece;
+          }
+        }
+      }
+    }
+    if (my_king.is_in_check() == true) {
+      console.log(this.board);
+      let new_valid_moves = [];
+      valid_moves.forEach((pos) => {
+        // I will place the piece on the valid pos, and check if the king is still in check
+        let my_pos = dict[this.piece_position]; // get self piece position
+        let piece_at_valid_position = this.board.arr[pos[0]][pos[1]].piece; // get the piece at the valid pos , we will need to put it back !
+        this.board.arr[my_pos[0]][my_pos[1]].piece.move(pos); // moving self piece to the valid pos
+        if (my_king.is_in_check() == false) {
+          // check if king is still in check
+          new_valid_moves.push(pos); // if no then you can push it as new_valid_moves
+        }
+        this.board.arr[pos[0]][pos[1]].piece.move(my_pos); // moving the self piece back to my_pos
+        this.board.arr[pos[0]][pos[1]].piece = piece_at_valid_position; // placing the piece which was replaced back to its original position !
+      });
+      console.log(this.board);
+      return new_valid_moves;
+    }
     return valid_moves;
   }
   invalid_moves() {
