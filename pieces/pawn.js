@@ -145,7 +145,6 @@ export class Pawn extends Piece {
       }
     }
     if (my_king.is_in_check() == true) {
-      console.log(this.board);
       let new_valid_moves = [];
       valid_moves_arr.forEach((pos) => {
         // I will place the piece on the valid pos, and check if the king is still in check
@@ -159,28 +158,26 @@ export class Pawn extends Piece {
         this.board.arr[pos[0]][pos[1]].piece.move(my_pos); // moving the self piece back to my_pos
         this.board.arr[pos[0]][pos[1]].piece = piece_at_valid_position; // placing the piece which was replaced back to its original position !
       });
-      console.log(this.board);
       return new_valid_moves;
     }
     // THE BELOW CONDITION IS TO CHECK IF A PIECE IS PINNED OR NOT !
     // we must also check that whether playing these moves can cause our King to be in check
-    let i = 0
-    while(i < valid_moves_arr.length){
+    let i = 0;
+    while (i < valid_moves_arr.length) {
       let my_pos = dict[this.piece_position]; // get self piece position
-      let new_pos = valid_moves_arr[i]
+      let new_pos = valid_moves_arr[i];
       let piece_at_new_position = this.board.arr[new_pos[0]][new_pos[1]].piece; // get the piece at the valid pos , we will need to put it back !
       this.board.arr[my_pos[0]][my_pos[1]].piece.move(valid_moves_arr[i]); // moving self piece to the valid pos
       if (my_king.is_in_check() == true) {
         valid_moves_arr.splice(i, 1);
-        i-- // need to do because valid move array's length is reduced therefore i also need to be removed, try with a example 
+        i--; // need to do because valid move array's length is reduced therefore i also need to be removed, try with a example
         // let valid move arr have 2 elements, suppose 1st is removed, then valid move array length becomes 1, so for next itereation 1 < 1; to avoid this we decrease i -> i- 1 ; so when it is incremented below , it turns i->0 .
       }
       this.board.arr[new_pos[0]][new_pos[1]].piece.move(my_pos); // moving the self piece back to my_pos
       this.board.arr[new_pos[0]][new_pos[1]].piece = piece_at_new_position; // placing the piece which was replaced back to its original position !
-      i++
+      i++;
     }
     return valid_moves_arr;
-
   }
 
   invalid_moves() {
