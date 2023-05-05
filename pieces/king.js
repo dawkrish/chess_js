@@ -364,9 +364,12 @@ export class King extends Piece {
 
             let opp_valid_moves = this.board.arr[i][j].piece.invalid_moves();
             let my_king_position = dict[this.piece_position];
-            
+
             for (let k = 0; k < opp_valid_moves.length; k++) {
-              if (JSON.stringify(opp_valid_moves[k]) == JSON.stringify(my_king_position)) {
+              if (
+                JSON.stringify(opp_valid_moves[k]) ==
+                JSON.stringify(my_king_position)
+              ) {
                 return true;
               }
             }
@@ -375,5 +378,44 @@ export class King extends Piece {
       }
     }
     return false;
+  }
+
+  is_checkmate() {
+    if (this.is_in_check() == false) {
+      // if not it in check then no checkmate
+      return false;
+    }
+    //now if any of the same color as king, piece has a valid move then not checkmate, else check mate
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (this.board.arr[i][j].piece != null) {
+          if (this.board.arr[i][j].piece.piece_color == this.piece_color) {
+            // my color pieces
+            // if none of them have valid any valid moves and the king is in check
+            if (this.board.arr[i][j].piece.valid_moves().length > 0) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true;
+  }
+
+  is_stalemate() {
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        if (this.board.arr[i][j].piece != null) {
+          if (this.board.arr[i][j].piece.piece_color == this.piece_color) {
+            // my color pieces
+            // if none of them have valid any valid moves and the king is in check
+            if (this.board.arr[i][j].piece.valid_moves().length > 0) {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    return true;
   }
 }
